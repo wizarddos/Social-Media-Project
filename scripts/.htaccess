@@ -1,0 +1,7 @@
+
+
+#Protect Directory
+AuthName "Dialog prompt"
+AuthType Basic
+AuthUserFile /xampp/htdocs/Social-Media-Project/.htpasswd
+Require valid-user
