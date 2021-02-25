@@ -5,3 +5,5 @@ AuthName "Dialog prompt"
 AuthType Basic
 AuthUserFile /xampp/htdocs/Social-Media-Project/.htpasswd
 Require valid-user
+
+ErrorDocument 401 http://localhost/Social-Media-Project/errors/401.html
