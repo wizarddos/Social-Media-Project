@@ -2,7 +2,8 @@
 <html>
     <head>
         <link rel="stylesheet" href="../../styles/styles.css"/>
-        <script  src="../../scripts/js/sidenav.js"></script>
+        <script src="../../scripts/js/sidenav.js"></script>
+        <script src="../../scripts/js/async_GetPostsjs"></script>
     </head>
     <body>
         <header>
