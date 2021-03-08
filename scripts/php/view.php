@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 /*
 szybkie wyjaśnienie skrótów (piewrwszych liter zmiennych)
 (nic) - atrubut klasy
@@ -44,12 +45,13 @@ function login($login, $pass){
     $pass = htmlentities($pass, ENT_HTML5, "UTF-8");
     try{
         require_once "../../includes/connect.php";
+        global $db_dsn, $db_user, $db_pass;
         $db = new PDO($db_dsn, $db_user, $db_pass);
         $sql = "SELECT * FROM users WHERE user = ?";
         $prepared = $db->prepare($sql);
         $prepared->bindParam(1, $login, PDO::PARAM_STR);
         $prepared->execute();
-        if($prepared->rowCount() === 0){
+        if($prepared->rowCount() == 0){
             return "Nieprawidłowy login lub hasło";
         }else{
             $result = $prepared->fetch(PDO::FETCH_ASSOC);
@@ -57,14 +59,13 @@ function login($login, $pass){
                 return "Nieprawidłowy login lub hasło";
             }else{
                 $return = $result;
-                
                 return $return;
-
             }
         }
         $db = NULL;
     }catch(PDOException $e){
-        echo $e;
+        $e = $e;
+        return $e;
     }
 }
 function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_status, $arg_name, $arg_surname){

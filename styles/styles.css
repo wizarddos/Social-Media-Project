@@ -1,22 +1,69 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    
 }
 
+
+body{
+  background-color: #26292b;
+}
+.form{
+  text-align: center;
+  width: 90%;
+  padding: 5%;
+  margin-left:auto;
+  margin-right:auto;
+}
+fieldset{
+  text-align: center;
+  padding: 2%;
+  width: 50%;
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input[type = "text"]{
+  margin-top: 25%;
+  width: 50%;
+}
 header{
-    width: 100%;
+    width: 98%;
     height: 10%;
-    background-color: aqua;
-    padding: 1em;
+    background-color: #2e3234;
+    padding: 1%;
     text-align: center;
     display: flex;
     
 }
 button{
     margin-right: 5%;
+    background-color: #2e3234;
+    border-width: 0;
+    padding: 1%;
+}
+
+main{
+  display: flex;
+}
+
+.headerSection{
+  width: 80%;
+  height: 100%;
+  padding: 1%;
+  text-align: center;
+  font-size: 40px;
+}
+
+.headerA{
+  margin-right: 1%;
 }
 
 
+/*sidenav*/
 .sidenav {
     height: 100%; 
     width: 0; 
@@ -24,7 +71,7 @@ button{
     z-index: 1; 
     top: 0; 
     left: 0;
-    background-color: #111; 
+    background-color: #26292c; 
     overflow-x: hidden; 
     padding-top: 60px; 
     transition: 0.5s; 
@@ -65,3 +112,4 @@ button{
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
   }
+
