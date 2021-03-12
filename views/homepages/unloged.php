@@ -1,12 +1,12 @@
 <?php session_start() ?>
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset = "UTF-8"/>
-<link rel="stylesheet" href="../../styles/login.css"/>
-<title>Zaloguj się</title>
-</head>
+<html lang = "pl">
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset = "UTF-8"/>
+  <link rel="stylesheet" href="../../styles/login.css"/>
+  <title>Zaloguj się</title>
+  </head>
 <body>
 
 
@@ -36,9 +36,9 @@
           <p>lub naszym kontem</p>
         </div>
 
-        <input type="text" name="login" placeholder="login" required>
+        <input type="text" name="login" placeholder="login" class = "logintext" required>
         <input type="password" name="pass" placeholder="Hasło" id = "pass" required><br/>
-        <label><input type = "checkbox" id = "check"/>Pokaż hasło </label>
+        <label><input type = "checkbox" id = "showpass"/> Pokaż hasło </label>
         <input type="submit" value="zaloguj się">
         <?php 
           if(isset($_SESSION['err'])){

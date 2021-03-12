@@ -14,7 +14,7 @@ function getPhotos(){
             console.log("error");
         }
     }   
-    xhr.open('GET', 'http://localhost/Social-Media-Project/scripts/php/getPhotos.php', true);
+    xhr.open('GET', '../php/getPhotos.php', true);
     xhr.send(null);
 
     //TODO: Naprawić Ajax

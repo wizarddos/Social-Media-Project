@@ -42,7 +42,6 @@ class DeafultViews{
 
 function login($login, $pass){
     $login = htmlentities($login, ENT_HTML5, "UTF-8");
-    $pass = htmlentities($pass, ENT_HTML5, "UTF-8");
     try{
         require_once "../../includes/connect.php";
         global $db_dsn, $db_user, $db_pass;
@@ -55,11 +54,11 @@ function login($login, $pass){
             return "Nieprawidłowy login lub hasło";
         }else{
             $result = $prepared->fetch(PDO::FETCH_ASSOC);
-            if(!password_verify($result['pass'], $pass)){
-                return "Nieprawidłowy login lub hasło";
+            if(password_verify($result['pass'], $pass)){
+                return "Nieprawidłowy logi lub hasło";
             }else{
-                $return = $result;
-                return $return;
+                //TODO: Naprawić logowanie
+                return $result;
             }
         }
         $db = NULL;
@@ -103,10 +102,6 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
         $_SESSION['e_mail']="Podaj poprawny adres e-mail!";
     }
 
-    if (!isset($_POST['ToS'])){
-        $isOK=false;
-        $_SESSION['e_ToS']="Potwierdź akceptację regulaminu!";
-    }
 
     $sekret = "6LczE2caAAAAAF_2y-t-HFJPqkI2Rkrq4yijQ8nY";
     $sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']);
@@ -117,6 +112,29 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
         $_SESSION['e_bot']="Potwierdź, że nie jesteś botem!";
     }
 
+    if(!is_numeric($arg_age)){
+        $isOK = false;
+        $_SESSION['e_age'] = "wiek musi być liczbą";
+    }
+
+    switch($arg_status){
+        case "single":
+        case "maried": break;
+
+        deafult: $_SESSION['e_stat'] = "zły status związku";
+    }
+
+    if(!is_string($arg_name)){  
+        $_SESSION['e_name'] = "Imię musi być ciągiem znakowym";
+        $isOK = false;
+    }
+
+    if(!is_string($arg_surname)){  
+        $_SESSION['e_name'] = "Nazwisko musi być ciągiem znakowym";
+        $isOK = false;
+    }
+
+
     $status = htmlentities($status, ENT_HTML5, "UTF-8");
     $age = htmlentities($age, ENT_HTML5, "UTF-8");
     $name = htmlentities($name, ENT_HTML5, "UTF-8");
@@ -126,7 +144,7 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
     }else{
         try{
             require_once "../../includes/connect.php";
-
+            global $db_dsn, $db_user, $db_pass;
             $db = new PDO($db_dsn, $db_user, $db_pass);
             $sql1 = "SELECT `id` FROM users WHERE user = ?";
             $prepared = $db->prepare($sql1);
@@ -134,31 +152,39 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
             $prepared->execute();
             if($prepared->rowCount() > 0){
                 $_SESSION['e_login'] = "Login zajęty";
+                return false;
             }else{
                 $sql2 = "SELECT `id` FROM users WHERE email = ? ";
                 $prepared2 = $db->prepare($sql2);
-                $prepared2->bindParam(1, $emailS, PDO::PARAM_STR );
+                $prepared2->bindParam(1, $emailS, PDO::PARAM_STR);
                 $prepared2->execute();
                 if($prepared2->rowCount() > 0){
                     $_SESSION['e_mail']="Email Zajęty";
+                    return false;
                 }else{
                     $hashed = password_hash($pass1, PASSWORD_DEFAULT);
-                    $sql3 = "INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?)";
+                    $sql3 = "INSERT INTO users VALUES(:id, :user, :pass, :email, :imie, :surname, :age, :couple, :friends)";
                     $prepared3 = $db->prepare($sql3);
-                    $prepared3->bindParam(1,NULL,PDO::PARAM_NULL);
-                    $prepared3->bindParam(2,$login,PDO::PARAM_STR);
-                    $prepared3->bindParam(3,$hashed,PDO::PARAM_STR);
-                    $prepared3->bindParam(4,$emailS,PDO::PARAM_STR);
-                    $prepared3->bindParam(5,$name,PDO::PARAM_STR);
-                    $prepared3->bindParam(6,$surname,PDO::PARAM_STR);
-                    $prepared3->bindParam(7," ", PDO::PARAM_STR);
-                    $prepared->execute();
+                    $null = NULL;
+                    $friends = " ";
+                    $prepared3->bindParam(":id", $null);
+                    $prepared3->bindParam(":user", $login);
+                    $prepared3->bindParam(":pass", $hashed);
+                    $prepared3->bindParam(":email", $emailS);
+                    $prepared3->bindParam(":imie", $name);
+                    $prepared3->bindParam(":surname", $surname);
+                    $prepared3->bindParam(":age", $age);
+                    $prepared3->bindParam(":couple", $status);
+                    $prepared3->bindParam(":friends", $friends);
+                    $prepared3->execute();
                     return true;
                 }
             }
             $db= NULL;
         }catch(PDOException $e){
-            return $e;
+            $_SESSION['e_serv'] = $e;
+            return false;
+            
         }
     }
 }
@@ -344,19 +370,28 @@ class User{
 
     public function showPhotos(){
         try{
-            require_once "../../includes/connect.php";
+            global $db_dsn, $db_user, $db_pass;
             $db = new PDO($db_dsn, $db_user, $db_pass);
-            $query = "SELECT * FROM posts WHERE whoPosted = ?";
-            $prepared = $db->prepare($query);
-            $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
+            $Select1 = "SELECT `friends` FROM users WHERE id = ? ";
+            $prepared = $db->prepare($Select1);
+            $prepared->bindParam(1,$this->id, PDO::PARAM_INT);
             $prepared->execute();
-            if($prepared->rowCount() != 0){
-                return $prepared->fetch(PDO::FETCH_ASSOC);
+            $result = $prepared->fetch(PDO::FETCH_ASSOC);
+                        
+            $friendIds = $result['friends'].", ".$this->id;
+                        
+            $Select2 = "SELECT * FROM photos WHERE WhoPosted IN(?)";
+            $prepared2 = $db->prepare($Select2);
+            $prepared2->bindParam(1, $friendIds, PDO::PARAM_STR);
+            $prepared2->execute();
+                            
+            if($prepared2->rowCount() > 0){
+                echo "there is something";
             }else{
-                return "Nie znaleziono żadnych wyników";
+                echo "nothing here";       
             }
         }catch(PDOException $e){
-            echo $e;
+            echo "error detected";
         }
     }
 
