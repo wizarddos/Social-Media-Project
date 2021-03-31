@@ -54,13 +54,13 @@ body {
   
   /* style the submit button */
   input[type=submit] {
-    background-color: #0024fe;
+    background-color:#adff2f;
     color: white;
     cursor: pointer;
   }
   
   input[type=submit]:hover {
-    background-color: #0024ff;
+    background-color: #adff2e;
   }
 
   #showpass{

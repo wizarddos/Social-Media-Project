@@ -1,61 +1,95 @@
 
-input[type = text], [type = password], [type = email], [type = number]{
-    width: 50%;
-    height: 100%;
-    color: #000;
-    padding: 1%;
-    margin-top: 2%;
-    border-width: 2px;
-    border-radius: 5px;
+main{
+     margin: auto;
+     width: 50%;
+     height: 100%;
+     text-align: center;
 }
 
+
+label{
+     font-size: 20px;
+}
+.label{
+     text-align: left;
+     width: 90%;
+     
+}
+.section__label{
+     margin-right: 2%;
+}
+form{
+     text-align: left;
+}
+.form__input{
+     width: 91%;
+     height: 20%;
+     border-radius: 5px;
+     font-size: large;
+     background-color: #26292b;  
+     margin-right: 2%;
+     padding: 5px;
+     border-color: grey;
+}
+
+.form__input:valid{
+     border-color: lime;
+}
+
+
+.section__input{
+     width: 44%;
+     height: 20%;
+     border-radius: 5px;
+     font-size: large;
+     background-color: #26292b;  
+     margin-right: 2%;
+     padding: 5px;
+}
+
+
+section{
+     display: flex;
+     
+}
+
+.g-recaptcha{
+    /* width: 305px;*/
+     margin-left: auto;
+     margin-right: auto;
+     margin-top: 2%;
+}
 .submit{
-    width: 50%;
-    height: 20%;
-    padding: 2%;
-    background-color: #adff2f;
-    color: #000;
-    font-size: 20px;
+     background-color: #26292b ;
+     color: #adff2f;
+     width: 100%;
+     margin-top: 5%;
+     margin-left: auto;
+     margin-right: auto;
+     padding: 5%;
+     font-size: 130%;
 }
 
 .submit:hover{
-    background-color: #adee2f;
+     background-color: #373a3c ;
 }
 
-fieldset{
-    border-width: 5px;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    width: 50%;
-    padding: 2%;
-}
-.g-recaptcha{
-    width: 305px;
-    margin-left: auto;
-    margin-right: auto;
-}
-h1{
-    text-align: center;
+@media (max-width: 650px){
+     section{
+          display: inline;
+     }
+
+     .section__input{
+          width: 100%;
+     }
+
+     .surname{
+          margin-top: 5%;
+     }
 }
 
-@media screen (max-width: 450px){
-    fieldset{
-        padding: 10%;
-    }
-
-    .submit{
-        width: 100%;
-    }
-
-    input[type = text], [type = password], [type = email], [type = number]{
-        width: 100%;
-    }
-}
-
-@media screen (max-width: 375px){
-    fieldset{
-        padding: 1%;
-    }
+@media (max-width:375px ){
+     .section__label{
+          font-size: 15px;
+     }
 }

@@ -1,11 +1,16 @@
-<?php session_start() ?>
+<?php session_start();
+  if(isset($_SESSION['user'])){
+    header("Location: loged.php");
+  }
+?>
 <!DOCTYPE html>
 <html lang = "pl">
   <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset = "UTF-8"/>
   <link rel="stylesheet" href="../../styles/login.css"/>
-  <title>Zaloguj się</title>
+  <link rel="icon" type="image/ico" href="../../img/deafultimg/favicon/favicon.ico">
+  <title>PostIt! - Zaloguj się</title>
   </head>
 <body>
 

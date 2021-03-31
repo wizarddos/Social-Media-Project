@@ -10,39 +10,18 @@ if(!isset($_SESSION['user'])){
     <head>
         <link rel="stylesheet" href="../../styles/fontello/css/fontello.css"/>
         <link rel="stylesheet" href="../../styles/styles.css"/>
-        
-        
-        
+        <link rel="icon" type="image/ico" href="../../img/deafultimg/favicon/favicon.ico">
+        <title>PostIt! - Strona główna</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="UTF-8"/>
         
     </head>
     <body>
-        <header>
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">zdjęcia</a>
-            <a href="#">Dodaj</a>
-            <a href="#">Myśli</a>
-            <a href="#">Znajomi</a>
-            <a href="#">Grupy</a>
-            <a href="#">wiadomości</a>
-            <br/>
-            <br/>
-            <a href = "../../scripts/php/unlog.php">Wyloguj się</a>
-        </div>
-            <button onclick="openNav()"><i class = "icon-menu"></i></button>
-            <section class = "headerSection"> 
-                <a href = "#" class = "headerA"><i class = "icon-home"></i></a>
-                <a href = "" class = "headerA"><i class = "icon-plus"></i></a>
-                <a href = "#" class = "headerA"><i class = "icon-search"></i></a>
-                <a href = "" class = "headerA"><i class = "icon-comment"></i></a>
-            </section>
-            <a href="#"><i class = "icon-user"></i></a>
-        </header>
-        <main>
-            <section class = "Posts">
-                <?php 
+
+        <?php generate_header();?>
+        <main class = "main">
+            <section class = "Posts Friends">
+                <?php
                     $_SESSION['user']->showPhotos();
                 ?>
             </section>

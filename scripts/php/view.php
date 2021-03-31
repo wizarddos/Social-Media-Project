@@ -10,6 +10,7 @@ arg - Argument funkcji
 
 */
 
+
 class DeafultViews{
     public function home(){
         if($_SESSION['loged']){
@@ -39,6 +40,36 @@ class DeafultViews{
     }
 }
 
+function generate_header(){
+    if(isset($_SESSION['user'])){
+        echo<<<END
+            <header>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a href="#">zdjęcia</a>
+                    <a href="#">Dodaj</a>
+                    <a href="#">Myśli</a>
+                    <a href="#">Znajomi</a>
+                    <a href="#">Grupy</a>
+                    <a href="#">wiadomości</a>
+                    <br/>
+                    <br/>
+                    <a href = "http://post.it/Social-Media-Project/scripts/php/unlog.php">Wyloguj się</a>
+                </div>
+                    <button onclick="openNav()"><i class = "icon-menu"></i></button>
+                    <section class = "headerSection"> 
+                        <a href = "http://post.it/Social-Media-Project/views/homepages/loged.php" class = "headerA"><i class = "icon-home"></i></a>
+                        <a href = "" class = "headerA"><i class = "icon-plus"></i></a>
+                        <a href = "#" class = "headerA"><i class = "icon-search"></i></a>
+                        <a href = "" class = "headerA"><i class = "icon-comment"></i></a>
+                    </section>
+                    <a href="#"><i class = "icon-user"></i></a>
+            </header>
+        END;
+    }else{
+        echo '<header style = ""><h1 style = "text-align: center"><a href = "../views/homepages/unloged.php">Zaloguj się</a><br/></h1></header>';
+    }
+}
 
 function login($login, $pass){
     $login = htmlentities($login, ENT_HTML5, "UTF-8");
@@ -57,7 +88,6 @@ function login($login, $pass){
             if(password_verify($result['pass'], $pass)){
                 return "Nieprawidłowy logi lub hasło";
             }else{
-                //TODO: Naprawić logowanie
                 return $result;
             }
         }
@@ -67,6 +97,7 @@ function login($login, $pass){
         return $e;
     }
 }
+    
 function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_status, $arg_name, $arg_surname){
     $login = $arg_login;
     $email = $arg_email;
@@ -370,28 +401,41 @@ class User{
 
     public function showPhotos(){
         try{
-            global $db_dsn, $db_user, $db_pass;
+            global $db_dsn, $db_user, $db_pass, $db_host, $db_name;
             $db = new PDO($db_dsn, $db_user, $db_pass);
-            $Select1 = "SELECT `friends` FROM users WHERE id = ? ";
-            $prepared = $db->prepare($Select1);
-            $prepared->bindParam(1,$this->id, PDO::PARAM_INT);
+            $sql = "SELECT friends FROM users WHERE id = ?";
+            $prepared = $db->prepare($sql);
+            $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
             $prepared->execute();
-            $result = $prepared->fetch(PDO::FETCH_ASSOC);
-                        
-            $friendIds = $result['friends'].", ".$this->id;
-                        
-            $Select2 = "SELECT * FROM photos WHERE WhoPosted IN(?)";
-            $prepared2 = $db->prepare($Select2);
-            $prepared2->bindParam(1, $friendIds, PDO::PARAM_STR);
-            $prepared2->execute();
-                            
-            if($prepared2->rowCount() > 0){
-                echo "there is something";
+            $assoc = $prepared->fetch(PDO::FETCH_ASSOC);
+            $db = NULL;
+
+            //-----------------------------------------------//
+
+            $friends = $assoc['friends'];
+            
+            if($friends != " " ){
+                $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
+                if($db2->connect_errno != 0){
+                    throw new mysqli_sql_exception($db2->connect_error);
+                }
+                $friends = 1;
+                if(!$result = $db2->query("SELECT * FROM photos WHERE WhoPosted IN($friends)")){
+                    throw new mysqli_sql_exception($db2->error);
+                }
+                $row = $result->fetch_assoc();
+                foreach($result as $row){
+                    echo $row['title'];
+                }
+                $db2->close();
             }else{
-                echo "nothing here";       
+                echo "Nie masz dodanych Przyjaciół <br/> więc nie ma żadnych postów<br/>";
+                echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
             echo "error detected";
+        }catch(mysqli_sql_exception $e){
+            echo $e;
         }
     }
 

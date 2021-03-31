@@ -35,7 +35,7 @@ if(!$register){
     if(isset($_SESSION['user'])){
         header("Location: ../../views/homepages/loged.php");
     }else{
-        $_SESSION['e_serv'] = "NIezadeklarowano obiektu user";
+        $_SESSION['e_serv'] = "błąd serwera. Kod 1";
     }
 
 

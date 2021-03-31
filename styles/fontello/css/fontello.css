@@ -55,7 +55,7 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.icon-user:before { content: '\e800'; font-size: 40px; margin-top: 30%; } /* '' */
+.icon-user:before { content: '\e800'; font-size: 40px; margin-top: 40%;  } /* '' */
 .icon-home:before { content: '\e801'; font-size: 40px;  } /* '' */
 .icon-search:before { content: '\e802'; } /* '' */
 .icon-plus:before { content: '\e803'; } /* '' */
@@ -67,7 +67,7 @@
 
 @media (max-width: 420px){
 
-  .icon-user:before { content: '\e800'; font-size: 40px; margin-top: 30%;} /* '' */
+  .icon-user:before { content: '\e800'; font-size: 40px; margin-top: 16%;} /* '' */
   .icon-home:before { content: '\e801'; font-size: 40px;  } /* '' */
   .icon-search:before { content: '\e802'; font-size: 0; } /* '' */
   .icon-plus:before { content: '\e803'; font-size: 0;} /* '' */

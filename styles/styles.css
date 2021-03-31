@@ -6,6 +6,12 @@
     
 }
 
+.Posts{
+  text-align: center;
+  padding: 2%;
+  margin: 1%;
+  width: 94%;
+}
 
 body{
   background-color: #26292b;
@@ -48,11 +54,7 @@ button{
 }
 
 
-.Posts{
-  text-align: center;
-  width: 100%;
-  margin-top: 1%;
-}
+
 .headerSection{
   width: 80%;
   height: 100%;
