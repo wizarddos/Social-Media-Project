@@ -54,11 +54,11 @@ function generate_header(){
                     <a href="#">wiadomości</a>
                     <br/>
                     <br/>
-                    <a href = "http://post.it/Social-Media-Project/scripts/php/unlog.php">Wyloguj się</a>
+                    <a href = "http://localhost/Social-Media-Project/scripts/php/unlog.php">Wyloguj się</a>
                 </div>
                     <button onclick="openNav()"><i class = "icon-menu"></i></button>
                     <section class = "headerSection"> 
-                        <a href = "http://post.it/Social-Media-Project/views/homepages/loged.php" class = "headerA"><i class = "icon-home"></i></a>
+                        <a href = "http://localhost/Social-Media-Project/views/homepages/loged.php" class = "headerA"><i class = "icon-home"></i></a>
                         <a href = "" class = "headerA"><i class = "icon-plus"></i></a>
                         <a href = "#" class = "headerA"><i class = "icon-search"></i></a>
                         <a href = "" class = "headerA"><i class = "icon-comment"></i></a>
