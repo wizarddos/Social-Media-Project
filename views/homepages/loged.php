@@ -1,5 +1,5 @@
 <?php
-require_once "../../scripts/php/view.php";
+require_once "../../scripts/php/scripts.php";
 require_once "../../includes/connect.php";
 if(!isset($_SESSION['user'])){
     header("Location: unloged.php");
@@ -23,6 +23,11 @@ if(!isset($_SESSION['user'])){
             <section class = "Posts Friends">
                 <?php
                     $_SESSION['user']->showPhotos();
+                ?>
+            </section>
+            <section class = "Posts Friends">
+                <?php
+                    $_SESSION['user']->showThinks();
                 ?>
             </section>
 

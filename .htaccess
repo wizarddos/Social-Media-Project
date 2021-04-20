@@ -1,5 +1,2 @@
 ErrorDocument 404 http://localhost/Social-Media-Project/errors/404.php
 ErrorDocument 403 http://localhost/Social-Media-Project/errors/403.php
-
-ErrorDocument 404 http://www.postit.pl/Social-Media-Project/errors/404.php
-ErrorDocument 403 http://www.postit.pl/Social-Media-Project/errors/403.php

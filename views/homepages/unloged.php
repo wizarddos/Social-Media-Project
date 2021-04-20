@@ -43,7 +43,7 @@
 
         <input type="text" name="login" placeholder="login" class = "logintext" required>
         <input type="password" name="pass" placeholder="Hasło" id = "pass" required><br/>
-        <label><input type = "checkbox" id = "showpass"/> Pokaż hasło </label>
+        <label><input type = "checkbox" id = "showpass" onclick = "showpass"/> Pokaż hasło </label>
         <input type="submit" value="zaloguj się">
         <?php 
           if(isset($_SESSION['err'])){
@@ -68,5 +68,15 @@
   </div>
 </div>
 <script src="../../scripts/js/showpass.js"></script>
+<script>
+  function showpass(){
+    var x = document.getElementById("pass");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+}
+</script>
 </body>
 </html>

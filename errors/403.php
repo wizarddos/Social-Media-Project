@@ -5,7 +5,7 @@
     </head>
     <body>
         <?php
-            require_once "../scripts/php/view.php";
+            require_once "../scripts/php/scripts.php";
             generate_header();
         ?>
         <main class = "Posts">

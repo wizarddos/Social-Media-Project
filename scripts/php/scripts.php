@@ -13,10 +13,10 @@ arg - Argument funkcji
 
 class DeafultViews{
     public function home(){
-        if($_SESSION['loged']){
-            require_once "../../views/homepages/loged.php";
+        if(isset($_SESSION['user'])){
+            header("Location: views/homepages/loged.php");
         }else{
-            require_once "../../views/homepages/unloged.html";
+            header("Location: views/homepages/unloged.php");
         }
     }
     public function login(){
@@ -47,7 +47,7 @@ function generate_header(){
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="#">zdjęcia</a>
-                    <a href="#">Dodaj</a>
+                    <a href="http://localhost/Social-Media-Project/views/add.php">Dodaj</a>
                     <a href="#">Myśli</a>
                     <a href="#">Znajomi</a>
                     <a href="#">Grupy</a>
@@ -59,7 +59,7 @@ function generate_header(){
                     <button onclick="openNav()"><i class = "icon-menu"></i></button>
                     <section class = "headerSection"> 
                         <a href = "http://localhost/Social-Media-Project/views/homepages/loged.php" class = "headerA"><i class = "icon-home"></i></a>
-                        <a href = "" class = "headerA"><i class = "icon-plus"></i></a>
+                        <a href = "http://localhost/Social-Media-Project/views/add.php" class = "headerA"><i class = "icon-plus"></i></a>
                         <a href = "#" class = "headerA"><i class = "icon-search"></i></a>
                         <a href = "" class = "headerA"><i class = "icon-comment"></i></a>
                     </section>
@@ -72,29 +72,30 @@ function generate_header(){
 }
 
 function login($login, $pass){
-    $login = htmlentities($login, ENT_HTML5, "UTF-8");
     try{
+        $slogin = htmlentities($login, ENT_HTML5, "UTF-8");
         require_once "../../includes/connect.php";
         global $db_dsn, $db_user, $db_pass;
         $db = new PDO($db_dsn, $db_user, $db_pass);
-        $sql = "SELECT * FROM users WHERE user = ?";
-        $prepared = $db->prepare($sql);
-        $prepared->bindParam(1, $login, PDO::PARAM_STR);
-        $prepared->execute();
-        if($prepared->rowCount() == 0){
-            return "Nieprawidłowy login lub hasło";
-        }else{
-            $result = $prepared->fetch(PDO::FETCH_ASSOC);
-            if(password_verify($result['pass'], $pass)){
-                return "Nieprawidłowy logi lub hasło";
-            }else{
+        $sql = "SELECT * FROM `users` WHERE `user` = ?";
+        $query1 = $db->prepare($sql);
+        $query1->bindParam(1, $slogin, PDO::PARAM_STR);
+        $query1->execute();
+        $result = $query1->fetch(PDO::FETCH_ASSOC);
+        if($query1->rowCount() > 0){
+            if(password_verify($pass, $result['pass'])){
                 return $result;
+            }else{
+                $_SESSION['err'] = "Nieprawidłowy login lub hasło";
+                return false;
             }
+        }else{
+            $_SESSION['err'] = "Nieprawidłowy login lub hasło";
+            return false;
         }
-        $db = NULL;
+
     }catch(PDOException $e){
-        $e = $e;
-        return $e;
+        $_SESSION['err'] = "BŁąd serwera";
     }
 }
     
@@ -383,18 +384,40 @@ class User{
 
     public function showThinks(){
         try{
-            require_once "../../includes/connect.php";
+            global $db_dsn, $db_user, $db_pass, $db_host, $db_name;
             $db = new PDO($db_dsn, $db_user, $db_pass);
-            $query = "SELECT * FROM thinks WHERE whoPosted = ?";
-            $prepared = $db->prepare($query);
+            $sql = "SELECT friends FROM users WHERE id = ?";
+            $prepared = $db->prepare($sql);
             $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
             $prepared->execute();
-            if($prepared->rowCount() != 0){
-                return $prepared->fetch(PDO::FETCH_ASSOC);
+            $assoc = $prepared->fetch(PDO::FETCH_ASSOC);
+            $db = NULL;
+
+            //-----------------------------------------------//
+
+            $friends = $assoc['friends'].", ".$_SESSION['user']->id;
+            
+            if($friends != " " ){
+                $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
+                if($db2->connect_errno != 0){
+                    throw new mysqli_sql_exception($db2->connect_error);
+                }
+                $friends = 1;
+                if(!$result = $db2->query("SELECT * FROM thinks WHERE WhoPosted IN($friends)")){
+                    throw new mysqli_sql_exception($db2->error);
+                }
+                $row = $result->fetch_assoc();
+                foreach($result as $row){
+                    echo $row['title'];
+                }
+                $db2->close();
             }else{
-                return "Nie znaleziono żadnych wyników";
+                echo "Nie masz dodanych Przyjaciół <br/> więc nie ma żadnych postów<br/>";
+                echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
+            echo "error detected";
+        }catch(mysqli_sql_exception $e){
             echo $e;
         }
     }
@@ -479,8 +502,6 @@ class User{
         }
     }
     
-    
 }
-
 
 

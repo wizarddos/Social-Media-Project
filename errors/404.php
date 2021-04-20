@@ -7,10 +7,9 @@
     </head>
     <body>
         <?php
-            require_once "../scripts/php/view.php";
+            require_once "../scripts/php/scripts.php";
             generate_header();
         ?>
-        <main class = "Posts">
             <h1>404 - Nie znaleziono strony</h1>
             <?php 
                 if(isset($_SESSION['user'])){
@@ -19,7 +18,6 @@
                     echo '<a href = "../views/homepages/unloged.php">zaloguj się</a>';
                 }
             ?>
-        </main>
         <script src="../scripts/js/sidenav.js"></script>
     </body>
 </html>

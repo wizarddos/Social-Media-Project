@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "view.php";
+require_once "scripts.php";
 require_once "../../includes/connect.php";
 $register = register($_POST['login'], $_POST['pass'], $_POST['pass2'], $_POST['email'], $_POST['age'], $_POST['status'], $_POST['name'], $_POST['surname']);
 if(!$register){

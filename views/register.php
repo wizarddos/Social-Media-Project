@@ -20,7 +20,7 @@
       <h1>Zarejestruj się</h1>
       <br/>
       <br/>
-      <form method="POST" action="../scripts/php/register.php">
+      <form class = "form" method="POST" action="../scripts/php/register.php">
           <label class = "label">Login <br/><input type = "text" name = "login" class = "form__input" placeholder="Login" required/></label><br/><br/>
           <?php
             if(isset($_SESSION['e_login'])){
@@ -73,6 +73,7 @@
           </section>
           <div class="g-recaptcha" data-sitekey="6LczE2caAAAAAPd85wWlVhHIJsMv1Z1a9uQ6iP1Z"></div>
           <br/>
+          <input type = "hidden" value = "registr"/>
           <input type = "submit" value = "zarejestruj się" class = "submit"/>
           <?php
             if(isset($_SESSION['e_serv'])){

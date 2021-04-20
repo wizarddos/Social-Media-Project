@@ -10,13 +10,17 @@
   text-align: center;
   padding: 2%;
   margin: 1%;
-  width: 94%;
+  width: 44%;
+}
+
+.main{
+  display: flex;
 }
 
 body{
   background-color: #26292b;
 }
-form{
+.form{
   text-align: center;
   width: 90%;
   padding: 5%;
@@ -69,6 +73,7 @@ button{
   color: #adff2f;
 }
 
+/*-------------------------------------------------------------*/
 
 /*sidenav*/
 .sidenav {

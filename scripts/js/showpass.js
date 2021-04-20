@@ -16,12 +16,5 @@ el.addEventListener("change", function(){
 }, false)
 
 
-var el2 = document.getElementById('showpass');
-el2.addEventListener("change", function(){
-    let x = document.getElementById("pass");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-}, false)
+
+

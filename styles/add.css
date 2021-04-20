@@ -1,0 +1,67 @@
+.add{
+     width: 46%;
+     padding: 2%;
+     margin: 2%;
+}
+
+main{
+     width: 100%;
+     display: flex;
+}
+
+.addForm{
+     width: 95%
+}
+
+textarea{
+     padding: 5%;
+     width: 80%;
+     height: 100%;
+     background-color: #26292b;
+     border-color: #fff;
+     border-radius: 5px;
+     border-style: solid;
+     resize: none;
+}
+
+label{
+     font-size: 20px;
+}
+
+.title{
+     padding: 2%;
+     width: 80%;
+     height: 10%;
+     background-color: #26292b;
+     border-color: #fff;
+     border-radius: 5px;
+     border-style: solid;
+     resize: none;
+}
+
+.submit{
+     width: 80%;
+     height: 30%;
+     background-color: #adff2f;
+     color: #26292b;
+     margin-top: 2%;
+     padding: 2%;
+     font-size: 20px;
+     border-radius: 5px;
+     border-color: #15181a;
+     border-width: 5px
+}
+
+.submit:hover{
+     background-color: #9cee1e;
+}
+
+@media (max-width: 666px){
+     main{
+          display: block;
+     }
+
+     .add{
+          width: 96%;
+     }
+}
