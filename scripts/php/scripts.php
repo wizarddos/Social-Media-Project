@@ -395,24 +395,24 @@ class User{
 
             //-----------------------------------------------//
 
-            $friends = $assoc['friends'].", ".$_SESSION['user']->id;
+            $friends = $assoc['friends'].", ".$this->id;
             
             if($friends != " " ){
                 $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
                 if($db2->connect_errno != 0){
                     throw new mysqli_sql_exception($db2->connect_error);
                 }
-                $friends = 1;
-                if(!$result = $db2->query("SELECT * FROM thinks WHERE WhoPosted IN($friends)")){
+                if(!$result = $db2->query("SELECT * FROM thinks WHERE WhoPosted IN($friends) ORDER BY WhenPosted DESC")){
                     throw new mysqli_sql_exception($db2->error);
                 }
                 $row = $result->fetch_assoc();
                 foreach($result as $row){
-                    echo $row['title'];
+                    echo $row['title']."<br/>";
+                    
                 }
                 $db2->close();
             }else{
-                echo "Nie masz dodanych Przyjaciół <br/> więc nie ma żadnych postów<br/>";
+                echo "Nie masz dodanych Przyjaciół <br/> więc nie ma żadnych Myśli<br/>";
                 echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
@@ -452,7 +452,7 @@ class User{
                 }
                 $db2->close();
             }else{
-                echo "Nie masz dodanych Przyjaciół <br/> więc nie ma żadnych postów<br/>";
+                echo "nie ma żadnych postów<br/>";
                 echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){

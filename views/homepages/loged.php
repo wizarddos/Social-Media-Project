@@ -34,6 +34,5 @@ if(!isset($_SESSION['user'])){
         </main>
 
         <script src="../../scripts/js/sidenav.js"></script>
-        <script src="../../scripts/js/AsyncPostsScripts.js"></script>
     </body>
 </html>

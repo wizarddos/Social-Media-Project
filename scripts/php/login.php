@@ -7,7 +7,6 @@ $pass = $_POST['pass'];
 
 $user = login($login, $pass);
 if(!$user){
-    $_SESSION['err'] = $user;
     header("Location: ../../views/homepages/unloged.php");
 }else{
     $_SESSION['user'] = new User($user['email'], $user['id'], $user['age'], $user['name'], $user['surname'], $user['status']);
