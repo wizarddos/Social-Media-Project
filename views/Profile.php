@@ -12,7 +12,7 @@ if(!isset($_SESSION['user'])){
         <link rel="stylesheet" href="../styles/styles.css"/>
         <link rel="stylesheet" href="../styles/profile.css"/>
         <link rel="icon" type="image/ico" href="../img/deafultimg/favicon/favicon.ico">
-        <title>PostIt! - Strona główna</title>
+        <title>PostIt! - Twój Profil</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="UTF-8"/>
         

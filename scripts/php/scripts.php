@@ -306,7 +306,6 @@ class User{
                     $_SESSION['e_mail'] = "Email zajęty";
                     return false;
                 }else{
-                    $empty = "";
                     $hashed = password_hash($pass1, PASSWORD_DEFAULT);
                     $sql2 = "UPDATE users SET pass = :pass, email = :mail, name = :nam, surname = :sur, age = :age, status = :stat WHERE id = :id  ";
                     $prepared2 = $db->prepare($sql2);
@@ -432,21 +431,6 @@ class User{
                 }
                 $db2->close();
             }else{
-                $friends = $this->id;
-                $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
-                if($db2->connect_errno != 0){
-                    throw new mysqli_sql_exception($db2->connect_error);
-                }
-                if(!$result = $db2->query("SELECT * FROM thinks WHERE WhoPosted IN($friends) ORDER BY WhenPosted DESC")){
-                    throw new mysqli_sql_exception($db2->error);
-                }
-                $row = $result->fetch_assoc();
-                foreach($result as $row){
-                    echo $row['title']."<br/>";
-                    
-                }
-                $db2->close();
-
                 echo "<br/>Nie masz dodanych Przyjaciół <br/> więc nie ma innych Myśli niż twoje<br/>";
                 echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
             }
@@ -473,17 +457,17 @@ class User{
             $friends = $assoc['friends'];
             
             if($friends != " " ){
+                $friends = $friends.", ".$this->id;
                 $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
                 if($db2->connect_errno != 0){
                     throw new mysqli_sql_exception($db2->connect_error);
                 }
-                $friends = 1;
                 if(!$result = $db2->query("SELECT * FROM photos WHERE WhoPosted IN($friends)")){
                     throw new mysqli_sql_exception($db2->error);
                 }
                 $row = $result->fetch_assoc();
                 foreach($result as $row){
-                    echo $row['title'];
+                    echo $row['title']."<br/>";
                 }
                 $db2->close();
             }else{

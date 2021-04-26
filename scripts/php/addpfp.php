@@ -18,7 +18,7 @@ if(isset($_POST['submited'])){
      $allowed = array('jpg', 'jpeg', 'png');
      if (in_array($pfpRelExt, $allowed)) {
           if($pfpError === 0){
-               if($pfpSize < 40000){
+               if($pfpSize > 4000){
                     $pfpNewName = $_SESSION['user']->getlogin().'.'.$pfpRelExt;
                     $pfpDestin = '../../img/pfpics/'.$pfpNewName;
                     if (move_uploaded_file($pfpTmpName, $pfpDestin)) {
