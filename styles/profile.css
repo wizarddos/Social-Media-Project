@@ -1,0 +1,18 @@
+@media (max-width: 930px) {
+     .main{
+          display: block;
+     }
+     .Posts{
+          width: 100%;
+     }
+}
+@media (max-width: 410px) {
+     .Profile{
+          display: block;
+     }
+
+     article{
+          width: 100%;
+          margin-top: 2%;
+     }
+}

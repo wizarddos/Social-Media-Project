@@ -50,7 +50,6 @@ function generate_header(){
                     <a href="http://localhost/Social-Media-Project/views/add.php">Dodaj</a>
                     <a href="#">Myśli</a>
                     <a href="#">Znajomi</a>
-                    <a href="#">Grupy</a>
                     <a href="#">wiadomości</a>
                     <br/>
                     <br/>
@@ -63,7 +62,7 @@ function generate_header(){
                         <a href = "#" class = "headerA"><i class = "icon-search"></i></a>
                         <a href = "" class = "headerA"><i class = "icon-comment"></i></a>
                     </section>
-                    <a href="#"><i class = "icon-user"></i></a>
+                    <a href="http://localhost/Social-Media-Project/views/Profile.php"><i class = "icon-user"></i></a>
             </header>
         END;
     }else{
@@ -186,6 +185,7 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
                 $_SESSION['e_login'] = "Login zajęty";
                 return false;
             }else{
+                $empty = "";
                 $sql2 = "SELECT `id` FROM users WHERE email = ? ";
                 $prepared2 = $db->prepare($sql2);
                 $prepared2->bindParam(1, $emailS, PDO::PARAM_STR);
@@ -195,7 +195,7 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
                     return false;
                 }else{
                     $hashed = password_hash($pass1, PASSWORD_DEFAULT);
-                    $sql3 = "INSERT INTO users VALUES(:id, :user, :pass, :email, :imie, :surname, :age, :couple, :friends)";
+                    $sql3 = "INSERT INTO users VALUES(:id, :user, :pass, :email, :imie, :surname, :age, :couple, :friends, :pfp)";
                     $prepared3 = $db->prepare($sql3);
                     $null = NULL;
                     $friends = " ";
@@ -208,6 +208,7 @@ function register($arg_login, $arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_
                     $prepared3->bindParam(":age", $age);
                     $prepared3->bindParam(":couple", $status);
                     $prepared3->bindParam(":friends", $friends);
+                    $prepared3->bindParam(":pfp", $empty);
                     $prepared3->execute();
                     return true;
                 }
@@ -237,6 +238,23 @@ class User{
         $this->surname = $Csurname;
         $this->status = $Cstatus;
 
+    }
+
+    public function getLogin(){
+        try{
+            global $db_dsn, $db_user, $db_pass, $db_host, $db_name;
+            $db = new PDO($db_dsn, $db_user, $db_pass);
+            $sql = "SELECT user FROM users WHERE id = ?";
+            $prepared = $db->prepare($sql);
+            $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
+            $prepared->execute();
+            $assoc = $prepared->fetch(PDO::FETCH_ASSOC);
+            $db = NULL;
+
+            return $assoc['user'];
+        }catch(PDOException $e){
+            echo "error detected";
+        }
     }
 
     public function editProfile($arg_pass, $arg_pass2, $arg_email, $arg_age, $arg_status, $arg_name, $arg_surname){
@@ -282,22 +300,23 @@ class User{
                 $db = new PDO($db_dsn, $db_user, $db_pass);
                 $sql1 = "SELECT `email` FROM users WHERE email = ?";
                 $prepared = $db->prepare($sql1);
-                $prepared->bindParam(1, $this->email, PDO::PARAM_STR);
+                $prepared->bindParam(1, $emailS, PDO::PARAM_STR);
                 $prepared->execute();
                 if($prepared->rowCount() > 0){
                     $_SESSION['e_mail'] = "Email zajęty";
                     return false;
                 }else{
+                    $empty = "";
                     $hashed = password_hash($pass1, PASSWORD_DEFAULT);
-                    $sql2 = "UPDATE users SET pass = ?, email = ?, name = ?, surname = ?, age = ?, status = ? WHERE id = ?  ";
+                    $sql2 = "UPDATE users SET pass = :pass, email = :mail, name = :nam, surname = :sur, age = :age, status = :stat WHERE id = :id  ";
                     $prepared2 = $db->prepare($sql2);
-                    $prepared2->bindParam(1, $hashed, PDO::PARAM_STR);
-                    $prepared2->bindParam(2, $emailS, PDO::PARAM_STR);
-                    $prepared2->bindParam(3, $name, PDO::PARAM_STR);
-                    $prepared2->bindParam(4, $surname, PDO::PARAM_STR);
-                    $prepared2->bindParam(5, $age, PDO::PARAM_INT);
-                    $prepared2->bindParam(6, $status, PDO::PARAM_STR);
-                    $prepared2->bindParam(7, $this->id, PDO::PARAM_INT);
+                    $prepared2->bindParam(':pass', $hashed);
+                    $prepared2->bindParam(':mail', $emailS);
+                    $prepared2->bindParam(':nam', $name);
+                    $prepared2->bindParam(':sur', $surname);
+                    $prepared2->bindParam(':age', $age);
+                    $prepared2->bindParam(':stat', $status);
+                    $prepared2->bindParam(':id', $this->id);
                     $prepared2->execute();
                     return true;
                 }
@@ -395,9 +414,10 @@ class User{
 
             //-----------------------------------------------//
 
-            $friends = $assoc['friends'].", ".$this->id;
+            $friends = $assoc['friends'];
             
             if($friends != " " ){
+                $friends = $friends.", ".$this->id;
                 $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
                 if($db2->connect_errno != 0){
                     throw new mysqli_sql_exception($db2->connect_error);
@@ -412,7 +432,22 @@ class User{
                 }
                 $db2->close();
             }else{
-                echo "Nie masz dodanych Przyjaciół <br/> więc nie ma żadnych Myśli<br/>";
+                $friends = $this->id;
+                $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
+                if($db2->connect_errno != 0){
+                    throw new mysqli_sql_exception($db2->connect_error);
+                }
+                if(!$result = $db2->query("SELECT * FROM thinks WHERE WhoPosted IN($friends) ORDER BY WhenPosted DESC")){
+                    throw new mysqli_sql_exception($db2->error);
+                }
+                $row = $result->fetch_assoc();
+                foreach($result as $row){
+                    echo $row['title']."<br/>";
+                    
+                }
+                $db2->close();
+
+                echo "<br/>Nie masz dodanych Przyjaciół <br/> więc nie ma innych Myśli niż twoje<br/>";
                 echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){

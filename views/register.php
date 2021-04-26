@@ -46,7 +46,7 @@
           ?><br/>
           <section>
             <input type = "text" name = "name" class = "section__input" placeholder="Imię" required/><br/>
-            <input type = "text" name = "surname" class = "section__input surname" placeholder= "Nazwisko" required/>
+            <input type = "text" name = "surname"  class = "section__input surname" placeholder= "Nazwisko" required/>
             <?php
             if(isset($_SESSION['e_name'])){
               echo '<span style = "color:red">'.$_SESSION['e_name'].'</span>';
