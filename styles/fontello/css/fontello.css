@@ -60,8 +60,8 @@
 .icon-search:before { content: '\e802'; } /* '' */
 .icon-plus:before { content: '\e803'; } /* '' */
 .icon-comment:before { content: '\e804'; } /* '' */
-.icon-heart:before { content: '\e805'; } /* '' */
-.icon-heart-empty:before { content: '\e806'; } /* '' */
+.icon-heart:before { content: '\e805'; font-size: 40px; color: red;} /* '' */
+.icon-heart-empty:before { content: '\e806'; font-size: 40px; color: red;} /* '' */
 .icon-menu:before { content: '\f0c9'; font-size: 40px; } /* '' */
 .icon-thumbs-up-alt:before { content: '\f164'; } /* '' */
 

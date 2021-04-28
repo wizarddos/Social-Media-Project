@@ -466,9 +466,18 @@ class User{
                     throw new mysqli_sql_exception($db2->error);
                 }
                 $row = $result->fetch_assoc();
+                $i = 0;
                 foreach($result as $row){
-                    echo $row['title']."<br/>";
+                    echo '<div class="photo">';
+                    echo " <h2>".$row['title']."</h2>";
+                    echo ' <img src="../../img/posts/'.$row['Pname'].'" alt="" width="40%"/>';
+                    echo '<section class = "post-section"><p>'.$row['description'].'</p> &nbsp';
+                    echo '<button class = "like" ><i class = "icon-heart-empty" onclick = "toogleLike(this,'.$row['id'].')"  id = "'.$i.'"></i></button></section>';
+                    echo 'Likeów: <span id = "'.$row['id'].'">'.$row['likes'].'</span><br/>';
+                    echo '<input type = "hidden" id = "'.$i.'" value = "'.$row['id'].'"/></div>';
+                    $i+1;
                 }
+                echo "<br/><br/>To tyle! Więcej postów nie ma";
                 $db2->close();
             }else{
                 echo "nie ma żadnych postów<br/>";
