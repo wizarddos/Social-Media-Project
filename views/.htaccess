@@ -1,0 +1,9 @@
+RewriteEngine on
+RewriteRule dodaj-post add.php
+RewriteRule wiadomosci dm.php
+RewriteRule twoj-profil Profile.php
+RewriteRule zarejestruj-sie register.php
+RewriteRule dziekujemy thankyou.php
+RewriteRule strona-glowna homepages/loged.php
+RewriteRule zaloguj-sie homepages/unloged.php
+RewriteRule przyjaciele friends.php

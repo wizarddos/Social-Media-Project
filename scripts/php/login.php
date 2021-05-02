@@ -7,9 +7,9 @@ $pass = $_POST['pass'];
 
 $user = login($login, $pass);
 if(!$user){
-    header("Location: ../../views/homepages/unloged.php");
+    header("Location: ../../views/zaloguj-sie");
 }else{
     $_SESSION['user'] = new User($user['email'], $user['id'], $user['age'], $user['name'], $user['surname'], $user['status']);
-    header("Location: ../../views/homepages/loged.php");
+    header("Location: ../../views/strona-glowna");
 }
 

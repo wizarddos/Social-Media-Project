@@ -10,7 +10,15 @@ if(!isset($_SESSION['user'])){
     <head>
         <link rel="stylesheet" href="../../styles/fontello/css/fontello.css"/>
         <link rel="stylesheet" href="../../styles/styles.css"/>
-        <link rel="icon" type="image/ico" href="../../img/deafultimg/favicon/favicon.ico">
+
+        <link rel="stylesheet" href="../styles/fontello/css/fontello.css"/>
+        <link rel="stylesheet" href="../styles/styles.css"/>
+
+        <link rel="stylesheet" href="styles/fontello/css/fontello.css"/>
+        <link rel="stylesheet" href="styles/styles.css"/>
+
+        <link rel="icon" type="image/ico" href="../img/deafultimg/favicon/favicon.ico">
+        
         <title>PostIt! - Strona główna</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="UTF-8"/>
@@ -35,7 +43,7 @@ if(!isset($_SESSION['user'])){
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="../../scripts/js/sidenav.js"></script>
-        <script src="../../scripts/js/like.js"></script>
+        <script src="../scripts/js/sidenav.js"></script>
+        <script src="../scripts/js/like.js"></script>
     </body>
 </html>

@@ -14,9 +14,9 @@ arg - Argument funkcji
 class DeafultViews{
     public function home(){
         if(isset($_SESSION['user'])){
-            header("Location: views/homepages/loged.php");
+            header("Location: views/strona-glowna");
         }else{
-            header("Location: views/homepages/unloged.php");
+            header("Location: views/zaloguj-sie");
         }
     }
     public function login(){
@@ -46,23 +46,21 @@ function generate_header(){
             <header>
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="#">zdjęcia</a>
-                    <a href="http://localhost/Social-Media-Project/views/add.php">Dodaj</a>
-                    <a href="#">Myśli</a>
+                    <a href="http://localhost/Social-Media-Project/views/dodaj-post">Dodaj</a>
                     <a href="#">Znajomi</a>
-                    <a href="#">wiadomości</a>
+                    <a href="http://localhost/Social-Media-Project/views/wiadomosci">wiadomości</a>
                     <br/>
                     <br/>
                     <a href = "http://localhost/Social-Media-Project/scripts/php/unlog.php">Wyloguj się</a>
                 </div>
                     <button onclick="openNav()"><i class = "icon-menu"></i></button>
                     <section class = "headerSection"> 
-                        <a href = "http://localhost/Social-Media-Project/views/homepages/loged.php" class = "headerA"><i class = "icon-home"></i></a>
-                        <a href = "http://localhost/Social-Media-Project/views/add.php" class = "headerA"><i class = "icon-plus"></i></a>
-                        <a href = "#" class = "headerA"><i class = "icon-search"></i></a>
-                        <a href = "" class = "headerA"><i class = "icon-comment"></i></a>
+                        <a href = "http://localhost/Social-Media-Project/views/strona-glowna" class = "headerA"><i class = "icon-home"></i></a>
+                        <a href = "http://localhost/Social-Media-Project/views/dodaj-post" class = "headerA"><i class = "icon-plus"></i></a>
+                        <a href = "http://localhost/Social-Media-Project/views/przyjaciele" class = "headerA"><i class = "icon-search"></i></a>
+                        <a href = "http://localhost/Social-Media-Project/views/wiadomosci" class = "headerA"><i class = "icon-comment"></i></a>
                     </section>
-                    <a href="http://localhost/Social-Media-Project/views/Profile.php"><i class = "icon-user"></i></a>
+                    <a href="http://localhost/Social-Media-Project/views/twoj-profil"><i class = "icon-user"></i></a>
             </header>
         END;
     }else{
@@ -228,7 +226,6 @@ class User{
     public $name;
     public $surname;
     public $status;
-    public $login;
 
     public function __construct($Cemail, $Cid, $Cage, $Cname, $Csurname, $Cstatus ){
         $this->email = $Cemail;
@@ -326,60 +323,7 @@ class User{
         }
     }
 
-    public function showProfile(){
-        try{
-            require_once "../../includes/connect.php";
-            $db = new PDO($db_dsn, $db_user, $db_pass);
-            $query = "SELECT * FROM users WHERE id = ?";
-            $prepared = $db->prepare($query);
-            $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
-            $prepared->execute();
-            if($prepared->rowCount() != 0){
-                return $prepared->fetch(PDO::FETCH_ASSOC);
-            }else{
-                return "Nie znaleziono żadnych wyników";
-            }
-            $db = NULL;
-        }catch(PDOException $e){
-            echo $e;
-        }
-    }
 
-    public function showSendedMessages(){
-        try{
-            require_once "../../includes/connect.php";
-            $db = new PDO($db_dsn, $db_user, $db_pass);
-            $query = "SELECT * FROM messages WHERE fromWho = ?";
-            $prepared = $db->prepare($query);
-            $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
-            $prepared->execute();
-            if($prepared->rowCount() != 0){
-                return $prepared->fetch(PDO::FETCH_ASSOC);
-            }else{
-                return "Nie znaleziono żadnych wyników";
-            }
-        }catch(PDOException $e){
-            echo $e;
-        }
-    }
-
-    public function showMessagesToYou(){
-        try{
-            require_once "../../includes/connect.php";
-            $db = new PDO($db_dsn, $db_user, $db_pass);
-            $query = "SELECT * FROM messages WHERE toWho = ?";
-            $prepared = $db->prepare($query);
-            $prepared->bindParam(1, $this->id, PDO::PARAM_INT);
-            $prepared->execute();
-            if($prepared->rowCount() != 0){
-                return $prepared->fetch(PDO::FETCH_ASSOC);
-            }else{
-                return "Nie znaleziono żadnych wyników";
-            }
-        }catch(PDOException $e){
-            echo $e;
-        }
-    }
 
     public function showFriends(){
         try{
@@ -426,13 +370,14 @@ class User{
                 }
                 $row = $result->fetch_assoc();
                 foreach($result as $row){
-                    echo $row['title']."<br/>";
+                    echo '<h3>'.$row['title']."</h3>";
+                    echo $row['content']."<br/><br/>";
                     
                 }
                 $db2->close();
             }else{
                 echo "<br/>Nie masz dodanych Przyjaciół <br/> więc nie ma innych Myśli niż twoje<br/>";
-                echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
+                echo '<br/><a href = "../znajdz-przyjaciol" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
             echo "error detected";
@@ -470,7 +415,7 @@ class User{
                 foreach($result as $row){
                     echo '<div class="photo">';
                     echo " <h2>".$row['title']."</h2>";
-                    echo ' <img src="../../img/posts/'.$row['Pname'].'" alt="" width="40%"/>';
+                    echo ' <img src="../img/posts/'.$row['Pname'].'" alt="" width="40%"/>';
                     echo '<section class = "post-section"><p>'.$row['description'].'</p> &nbsp';
                     echo '<button class = "like" ><i class = "icon-heart-empty" onclick = "toogleLike(this,'.$row['id'].')"  id = "'.$i.'"></i></button></section>';
                     echo 'Likeów: <span id = "'.$row['id'].'">'.$row['likes'].'</span><br/>';
@@ -481,7 +426,7 @@ class User{
                 $db2->close();
             }else{
                 echo "nie ma żadnych postów<br/>";
-                echo '<br/><a href = "../findFriends.php" >Szukaj Przyjaciół</a>';
+                echo '<br/><a href = "../znajdz-przyjaciol" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
             echo "error detected";
@@ -492,37 +437,41 @@ class User{
 
     public function sendMessage($arg_towho, $arg_content){
         $to_who = $arg_towho;
-        $from_who = $this->login;
+        $from_who = $this->getLogin();
         $content = $arg_content;
         $content = htmlentities($content, ENT_HTML5, "UTF-8");
         $to_who = htmlentities($to_who, ENT_HTML5, "UTF-8");
-        $from_who = htmlentities($from_who, ENT_HTML5, "UTF-8");
-        if($this->login != $to_who){
+        if($this->getLogin() != $to_who){
             try{
                 require_once "../../includes/connect.php";
+                global $db_dsn, $db_user, $db_pass;
                 $db = new PDO($db_dsn, $db_user, $db_pass);
                 $Select1 = "SELECT `id` FROM users WHERE user = ?";
                 $prepared = $db->prepare($Select1);
                 $prepared->bindParam(1,$to_who, PDO::PARAM_STR);
                 $prepared->execute();
+                $result = $prepared->fetch(PDO::FETCH_ASSOC);
                 if($prepared->rowCount() == 0){
                     $_SESSION['e_mes'] = "nie ma takiego usera";
                     return false;
                 }else{
-                    $Insert1 = "INSERT INTO messages VALUES(? ? ? ? ?)";
+                    $to_who =  $result['id'];
+                    $NULL = NULL;
+                    $Insert1 = "INSERT INTO messages VALUES(:id, :cont, :frm, :tw , :dat)";
                     $prepared = $db->prepare($Insert1);
-                    $prepared->bindParam(1, NULL, PDO::PARAM_NULL);
-                    $prepared->bindParam(2, $from_who, PDO::PARAM_STR);
-                    $prepared->bindParam(3, $to_who, PDO::PARAM_STR);
-                    $prepared->bindParam(4, $content, PDO::PARAM_STR);
-                    $prepared->bindParam(5, date("Y-m-d"), PDO::PARAM_STR);
+                    $prepared->bindParam(":id", $NULL, PDO::PARAM_NULL);
+                    $prepared->bindParam(":cont", $content, PDO::PARAM_STR);
+                    $prepared->bindParam(":frm", $to_who, PDO::PARAM_INT);
+                    $prepared->bindParam(":tw", $from_who, PDO::PARAM_STR);
+                    $prepared->bindParam(":dat", date("Y-m-d"), PDO::PARAM_STR);
                     $prepared->execute();
                     $_SESSION['e_mes'] = "Pomyślnie wysłano wiadomość";
                     return true;
                 }  
                 $db = NULL;
             }catch(PDOException $e){
-                echo $e;
+                $_SESSION['e_mes'] = $e;
+                return false;
             }
         }else{
             $_SESSION['e_mes'] = "nie można wysłać wiadomości do samego siebie";

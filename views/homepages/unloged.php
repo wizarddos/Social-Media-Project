@@ -9,7 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset = "UTF-8"/>
   <link rel="stylesheet" href="../../styles/login.css"/>
+  <link rel="stylesheet" href="../styles/login.css"/>
   <link rel="icon" type="image/ico" href="../../img/deafultimg/favicon/favicon.ico">
+  <link rel="icon" type="image/ico" href="../img/deafultimg/favicon/favicon.ico">
   <title>PostIt! - Zaloguj się</title>
   </head>
 <body>
@@ -17,7 +19,7 @@
 
 
 <div class="container">
-  <form action="../../scripts/php/login.php" method="POST">
+  <form action="../scripts/php/login.php" method="POST">
     <div class="row">
       <h2 style="text-align:center">Zaloguj się</h2>
       <div class="vl">
@@ -60,7 +62,7 @@
 <div class="bottom-container">
   <div class="row">
     <div class="col">
-      <a href="../register.php" style="color:white" class="btn">Nie masz konta?</a>
+      <a href="zarejestruj-sie" style="color:white" class="btn">Nie masz konta?</a>
     </div>
     <div class="col">
       <a href="#" style="color:white" class="btn">Zapomniałeś Hasła?</a>

@@ -28,12 +28,12 @@ if(!$register){
         
     }catch(PDOException $e){
         $_SESSION['e_serv'] = $e;
-        header("Location: ../../views/register.php");
+        header("Location: ../../views/zarejestruj-sie");
     }
     $id = $row['id'];
     $_SESSION['user'] = new User($email, $id, $_POST['age'], $name, $surname, $status);
     if(isset($_SESSION['user'])){
-        header("Location: ../../views/homepages/loged.php");
+        header("Location: ../../views/strona-glowna");
     }else{
         $_SESSION['e_serv'] = "błąd serwera. Kod 1";
     }

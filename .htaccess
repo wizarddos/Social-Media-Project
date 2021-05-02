@@ -1,2 +1,6 @@
-ErrorDocument 404 http://localhost/Social-Media-Project/errors/404.php
-ErrorDocument 403 http://localhost/Social-Media-Project/errors/403.php
+ErrorDocument 404 http://localhost/Social-Media-Project/blad-404
+ErrorDocument 403 http://localhost/Social-Media-Project/blad-403
+
+RewriteEngine on
+RewriteRule blad-404 errors/404.php
+RewriteRule blad-403 errors/403.php
