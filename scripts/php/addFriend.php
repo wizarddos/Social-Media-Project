@@ -32,7 +32,7 @@ try{
      $stmt2->bindParam(1, $friendsFull);
      $stmt2->bindParam(2, $_SESSION['user']->id);
      $stmt2->execute();
-     echo "udało się ".$friendsFull;
+     echo "udało się";
      $db = NULL;
 }catch (PDOException $e){
      echo $e;

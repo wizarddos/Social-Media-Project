@@ -47,7 +47,7 @@ function generate_header(){
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <a href="http://localhost/Social-Media-Project/views/dodaj-post">Dodaj</a>
-                    <a href="#">Znajomi</a>
+                    <a href="http://localhost/Social-Media-Project/views/przyjaciele">Znajomi</a>
                     <a href="http://localhost/Social-Media-Project/views/wiadomosci">wiadomości</a>
                     <br/>
                     <br/>
