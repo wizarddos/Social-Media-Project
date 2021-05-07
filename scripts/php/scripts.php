@@ -64,7 +64,7 @@ function generate_header(){
             </header>
         END;
     }else{
-        echo '<header style = ""><h1 style = "text-align: center"><a href = "../views/homepages/unloged.php">Zaloguj się</a><br/></h1></header>';
+        echo '<header style = ""><h1 style = "text-align: center"><a href = "http://localhost/Social-Media-Project/views/zaloguj-sie">Zaloguj się</a><br/></h1></header>';
     }
 }
 
@@ -360,7 +360,7 @@ class User{
             $friends = $assoc['friends'];
             
             if($friends != " " ){
-                $friends = $friends.", ".$this->id;
+                $friends = $friends.$this->id;
                 $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
                 if($db2->connect_errno != 0){
                     throw new mysqli_sql_exception($db2->connect_error);
@@ -402,7 +402,7 @@ class User{
             $friends = $assoc['friends'];
             
             if($friends != " " ){
-                $friends = $friends.", ".$this->id;
+                $friends = $friends.$this->id;
                 $db2 = new mysqli($db_host, $db_user, $db_pass, $db_name);
                 if($db2->connect_errno != 0){
                     throw new mysqli_sql_exception($db2->connect_error);

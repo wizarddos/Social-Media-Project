@@ -16,9 +16,9 @@
             <h1>404 - Nie znaleziono strony</h1>
             <?php 
                 if(isset($_SESSION['user'])){
-                    echo '<a href = "../views/strona-glowna">Wroć na stronę główną</a>';
+                    echo '<a href = "/views/strona-glowna">Wroć na stronę główną</a>';
                 }else{
-                    echo '<a href = "../views/zaloguj-sie">zaloguj się</a>';
+                    echo '<a href = "views/zaloguj-sie">zaloguj się</a>';
                 }
             ?>
         <script src="scripts/js/sidenav.js"></script>
