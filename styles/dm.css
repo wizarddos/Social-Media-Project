@@ -6,8 +6,10 @@ iframe{
 }
 
 .main{
-     width: 75%;
+     width: 80%;
      align-items: center;
+     margin-left: auto;
+     margin-right: auto;
 }
 
 .sendmsg{
@@ -19,14 +21,14 @@ iframe{
      resize: none;
      background-color: #2e3234;
      border-color: #2e3234;
-     width: 100%;
+     width: 110%;
      padding: 2%;
      border-color: #45f035;
      border-radius: 5px;
 }
 
 .text_input{
-     width: 100%;
+     width: 110%;
      height: 10%;
      border-radius: 5px;
      background-color: #2e3234;
@@ -42,4 +44,10 @@ iframe{
 .submit:hover{
      background-color: #64ec57;
      border-color: #313233;
+}
+
+@media (max-width: 495px) {
+     .sendmsg{
+          width: 80%;
+     }
 }

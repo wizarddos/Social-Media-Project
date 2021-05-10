@@ -22,7 +22,7 @@
                generate_header();
           ?>
           <h1 style="text-align: center;">dziękujemy za współtworzenie naszej społeczności</h1>
-          <a href="homepages/loged.php">Wróć do głównej</a>
+          <a href="strona-glowna">Wróć do głównej</a>
 
         <script src="../scripts/js/sidenav.js"></script>
      </body>

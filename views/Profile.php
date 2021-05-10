@@ -62,7 +62,7 @@ if(!isset($_SESSION['user'])){
                             <br/>
                             <input type="file" name = "pfp" required>
                             <br/><br/>
-                            <button type ="submit" name = "submited" class = "submit">Ustaw profilowe</button>
+                            <button type ="submit" name = "submited" class = "submit pfpupdate">Ustaw profilowe</button>
                             <?php
                                 if(isset($_SESSION['e_file'])){
                                     echo $_SESSION['e_file'];

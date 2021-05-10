@@ -54,6 +54,7 @@
                                              else{$status = "W związku";}
                                              $id = $row['id'];
                                              echo<<<END
+                                                  <br/>
                                                   <div class = "profile">
                                                        <img src = "$pfpic" width="70px" height="80px"/>
                                                        &nbsp;

@@ -34,6 +34,7 @@ if(!isset($_SESSION['user'])){
                 ?>
             </section>
             <section class = "Posts Friends">
+                <h3 class = "ThinksHeader">Myśli:</h3><br/><br/>
                 <?php
                     $_SESSION['user']->showThinks();
                 ?>

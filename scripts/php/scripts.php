@@ -377,7 +377,7 @@ class User{
                 $db2->close();
             }else{
                 echo "<br/>Nie masz dodanych Przyjaciół <br/> więc nie ma innych Myśli niż twoje<br/>";
-                echo '<br/><a href = "../znajdz-przyjaciol" >Szukaj Przyjaciół</a>';
+                echo '<br/><a href = "przyjaciele" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
             echo "error detected";
@@ -426,7 +426,7 @@ class User{
                 $db2->close();
             }else{
                 echo "nie ma żadnych postów<br/>";
-                echo '<br/><a href = "../znajdz-przyjaciol" >Szukaj Przyjaciół</a>';
+                echo '<br/><a href = "przyjaciele" >Szukaj Przyjaciół</a>';
             }
         }catch(PDOException $e){
             echo "error detected";

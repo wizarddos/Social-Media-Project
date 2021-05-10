@@ -23,10 +23,11 @@ form{
 section{
      margin-left: auto;
      margin-right: auto;
+     
 }
 .profile{
      display: flex;
-     margin-left: 45%;
+     margin-left: 43%;     
 }
 .info{
      padding: 0%;
@@ -48,4 +49,24 @@ section{
 
 .btn-add:hover{
      background-color: #67d50d;
+}
+
+@media (max-width: 495px) {
+     .searchInput{
+          width: 100%;
+     }
+
+     .profile{
+          margin-left: auto;
+          margin-left: auto;
+          text-align: center;
+     }
+}
+
+@media (max-width: 500px) {
+     .profile{
+          margin-left: auto;
+          margin-left: auto;
+          text-align: center;
+     }
 }

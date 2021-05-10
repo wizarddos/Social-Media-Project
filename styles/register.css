@@ -86,6 +86,11 @@ section{
      .surname{
           margin-top: 5%;
      }
+
+     .age{
+          font-size: small;
+          -moz-appearance: textfield;
+     }
 }
 
 @media (max-width:375px ){

@@ -55,7 +55,7 @@
           ?><br/>
           </section><br/><br/>
           <section class = "section">
-            <input type = "number" name = "age" class = "section__input" placeholder="Wiek" required/>
+            <input type = "number" name = "age" class = "section__input age" placeholder="Wiek" required/>
             <label class="section__label">W związku &nbsp;<input type="radio" name="status" value="Married"></label>
             <label class="section__label">Singiel &nbsp;<input type="radio" name="status" value="single"></label>
             <?php
