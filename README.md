@@ -3,7 +3,7 @@
 Przepraszam za literówkę w 1 commit'cie
 
 
-##Jak uruchomić
+## Jak uruchomić
 potrzeba:
 pakiet typu XAMPP WAMPP etc.
 lub
